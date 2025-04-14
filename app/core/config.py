@@ -1,4 +1,3 @@
-# app/core/config.py
 import os
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
@@ -11,21 +10,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 load_dotenv(dotenv_path=BASE_DIR / ".env")
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "No Code Form Builder API"
+    PROJECT_NAME: str = "Formflow"
     API_V1_STR: str = "/api/v1"
 
     # Database settings
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "") # Load from env
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "")
 
     # JWT settings
-    SECRET_KEY: str = os.getenv("SECRET_KEY", "default_secret") # Load from env
-    ALGORITHM: str = os.getenv("ALGORITHM", "HS256") # Load from env
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30)) # Load from env
+    SECRET_KEY: str = os.getenv("SECRET_KEY", "default_secret")
+    ALGORITHM: str = os.getenv("ALGORITHM", "HS256")
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
 
     class Config:
         case_sensitive = True
-        # If not using pydantic-settings v2+, you might use:
-        # env_file = ".env"
 
 settings = Settings()
 

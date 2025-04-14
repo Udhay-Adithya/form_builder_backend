@@ -7,7 +7,7 @@ from typing import Optional
 class UserBase(BaseModel):
     email: EmailStr = Field(..., example="user@example.com")
     is_active: Optional[bool] = True
-    # is_superuser: bool = False # Optional
+    is_superuser: bool = False # Optional
 
 # Properties to receive via API on creation
 class UserCreate(UserBase):
@@ -26,7 +26,7 @@ class UserInDBBase(UserBase):
     updated_at: Optional[datetime] = None
 
     class Config:
-        from_attributes = True # Pydantic V2 replaces orm_mode
+        from_attributes = True
 
 # Additional properties stored in DB
 class UserInDB(UserInDBBase):
