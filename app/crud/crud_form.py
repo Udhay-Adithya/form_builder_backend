@@ -1,6 +1,7 @@
 import uuid
 from typing import List, Optional, Any, Dict
 
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
@@ -9,22 +10,33 @@ from sqlalchemy.orm import selectinload
 from app.models.form import Form
 from app.schemas.form import FormCreate, FormUpdate, FormData
 
-async def create_form(db: AsyncSession, *, form_in: FormCreate, owner_id: uuid.UUID) -> Form:
+async def create_form(db: AsyncSession, *, form_in: FormCreate, owner_id: uuid.UUID) -> Optional[Form]:
     """
-    Create a new form.
+    Create a new form with a client-provided ID.
+    Returns the created form or None if the ID already exists.
     """
+    # Check if ID already exists first (optional but good practice)
+    existing_form = await get_form(db=db, form_id=form_in.id)
+    if existing_form:
+        return None # Indicate conflict
+
     # Pydantic V2+ .model_dump() replaces .dict()
     form_data_dict = form_in.data.model_dump()
     db_form = Form(
+        id=form_in.id, # Use the provided ID
         data=form_data_dict,
         owner_id=owner_id
     )
     db.add(db_form)
-    await db.commit()
-    await db.refresh(db_form, attribute_names=['id', 'created_at']) # Refresh essential fields
-    # Eager load owner for the response object
-    await db.refresh(db_form, attribute_names=['owner'])
-    return db_form
+    try:
+        await db.commit()
+        await db.refresh(db_form, attribute_names=['created_at']) # Refresh essential fields
+        # Eager load owner for the response object
+        await db.refresh(db_form, attribute_names=['owner'])
+        return db_form
+    except IntegrityError: # Catch potential race condition if ID was created between check and commit
+        await db.rollback()
+        return None
 
 
 async def get_form(db: AsyncSession, *, form_id: uuid.UUID) -> Optional[Form]:

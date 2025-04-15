@@ -20,9 +20,14 @@ async def create_form(
     current_user: user.User = Depends(get_current_user),
 ):
     """
-    Create new form owned by the current user.
+    Create new form owned by the current user, using a client-provided ID.
     """
     form = await crud_form.create_form(db=db, form_in=form_in, owner_id=current_user.id)
+    if form is None:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Form with ID '{form_in.id}' already exists.",
+        )
     # Ensure owner data is loaded for the response schema
     # crud function should handle this with eager loading or refresh
     return form

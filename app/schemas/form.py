@@ -40,6 +40,7 @@ class FormData(BaseModel):
 class FormCreate(BaseModel):
     # Instead of raw 'data', expect structured input
     # data: Dict[str, Any] # Old way - less type safe
+    id: uuid.UUID # Client provides the ID
     data: FormData # New way - more specific
 
 # Properties to receive via API on update

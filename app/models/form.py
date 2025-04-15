@@ -8,7 +8,7 @@ from app.db.base_class import Base
 class Form(Base):
     __tablename__ = "forms"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(UUID(as_uuid=True), primary_key=True)
     owner_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
     data = Column(JSON, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
