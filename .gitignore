@@ -1,6 +1,7 @@
 .env
 alembic.ini
-alembic/
+alembic/__pycache__/
+alembic/versions/__pycache__/
 app/db/__pycache__/
 app/models/__pycache__/
 app/__pycache__/
