@@ -1,11 +1,15 @@
-# Formflow Backend API
+<h1 align="center">
+  <img src="public/logo/formflow-logo-rounded.svg" height="80" alt="FormFlow logo">
+</h1>
+
+<p align="center"><i>Build beautiful forms effortlessly with drag & drop, AI, and real-time analytics 🚀</i></p>
+
 
 [![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Framework](https://img.shields.io/badge/Framework-FastAPI-green.svg)](https://fastapi.tiangolo.com/)
 [![Database](https://img.shields.io/badge/Database-PostgreSQL-blue.svg)](https://www.postgresql.org/)
+[![Contributors](https://img.shields.io/github/contributors/Udhay-Adithya/formflow?style=flat-square)](https://github.com/Udhay-Adithya/formflow_builder/graphs/contributors)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-A robust and scalable backend API for creating, managing, and collecting responses for dynamic forms. Built with modern Python technologies.
 
 ## ✨ Features
 
@@ -148,4 +152,4 @@ Contributions are welcome! Please follow standard fork-and-pull-request workflow
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. *(Create a LICENSE file, e.g., containing the MIT License text)*
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
